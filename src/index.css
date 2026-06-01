@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-slate-50 text-slate-800 antialiased; }
+  button, a, input, select, textarea { @apply transition duration-200; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-towing px-5 py-3 text-sm font-bold text-ink shadow-sm hover:bg-yellow-300 focus:outline-none focus:ring-4 focus:ring-yellow-200; }
+  .btn-dark { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-bold text-white hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-300; }
+  .btn-whatsapp { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-5 py-3 text-sm font-bold text-white hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-200; }
+  .card { @apply rounded-2xl border border-slate-200 bg-white shadow-soft; }
+  .field { @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none placeholder:text-slate-400 focus:border-yellow-400 focus:ring-4 focus:ring-yellow-100; }
+  .label { @apply mb-1.5 block text-xs font-bold uppercase tracking-wide text-slate-500; }
+}

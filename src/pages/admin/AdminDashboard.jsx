@@ -1,0 +1,14 @@
+import { Banknote, CarFront, CheckCircle2, Clock3 } from "lucide-react";
+import { createElement } from "react";
+import { Link } from "react-router-dom";
+import { StatusBadge } from "../../components/StatusBadge";
+import { useApp } from "../../context/AppContext";
+import { money } from "../../lib/estimate";
+
+export default function AdminDashboard() {
+  const { leads } = useApp();
+  const cards = [["Total leads", leads.length, CarFront, "bg-blue-100 text-blue-700"], ["New leads", leads.filter((lead) => lead.status === "new").length, Clock3, "bg-yellow-100 text-yellow-700"], ["Accepted", leads.filter((lead) => lead.status === "accepted").length, CheckCircle2, "bg-green-100 text-green-700"], ["Paid", leads.filter((lead) => lead.status === "paid").length, Banknote, "bg-slate-200 text-slate-800"]];
+  return <><PageTitle eyebrow="Overview" title="Dashboard" text="Monitor incoming vehicle estimates and the current lead pipeline." /><div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{cards.map(([label, value, Icon, style]) => <article key={label} className="card flex items-center justify-between p-5"><div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">{label}</p><p className="mt-2 text-3xl font-black">{value}</p></div><span className={`grid h-11 w-11 place-items-center rounded-xl ${style}`}>{createElement(Icon, { size: 21 })}</span></article>)}</div><section className="card mt-6 overflow-hidden"><div className="flex items-center justify-between border-b border-slate-100 p-5"><div><h2 className="font-black">Recent leads</h2><p className="mt-1 text-xs text-slate-500">Latest vehicle estimate requests</p></div><Link to="/admin/leads" className="text-xs font-black text-yellow-600 hover:text-yellow-700">VIEW ALL</Link></div><div className="overflow-x-auto"><table className="min-w-full text-left text-sm"><thead className="bg-slate-50 text-[11px] uppercase tracking-wider text-slate-400"><tr><th className="px-5 py-3">Customer</th><th className="px-5 py-3">Vehicle</th><th className="px-5 py-3">Estimate</th><th className="px-5 py-3">Status</th></tr></thead><tbody>{leads.slice(0, 5).map((lead) => <tr key={lead.id} className="border-t border-slate-100"><td className="px-5 py-4 font-bold">{lead.owner_name}<p className="mt-1 text-xs font-normal text-slate-400">{lead.city}</p></td><td className="px-5 py-4">{lead.vehicle_year} {lead.make} {lead.model}</td><td className="px-5 py-4 font-bold">{money(lead.estimated_price_min)} - {money(lead.estimated_price_max)}</td><td className="px-5 py-4"><StatusBadge status={lead.status} /></td></tr>)}</tbody></table></div></section></>;
+}
+
+export function PageTitle({ eyebrow, title, text }) { return <div><p className="text-xs font-black uppercase tracking-[0.2em] text-yellow-600">{eyebrow}</p><h1 className="mt-2 text-3xl font-black tracking-tight">{title}</h1><p className="mt-2 text-sm text-slate-500">{text}</p></div>; }

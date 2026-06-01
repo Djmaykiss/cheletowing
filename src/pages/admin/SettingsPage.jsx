@@ -1,0 +1,9 @@
+import { ExternalLink, Globe2, KeyRound, MessageCircle, ShieldCheck } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useApp } from "../../context/AppContext";
+import { PageTitle } from "./AdminDashboard";
+
+export default function SettingsPage() {
+  const { content, isDemo } = useApp();
+  return <><PageTitle eyebrow="Administration" title="Settings" text="Review business configuration and private dashboard access." /><div className="mt-6 grid gap-5 lg:grid-cols-2"><section className="card p-5"><div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-green-100 text-green-700"><MessageCircle size={20} /></span><div><h2 className="font-black">Business WhatsApp</h2><p className="mt-1 text-xs text-slate-500">Primary lead notification number</p></div></div><p className="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700">{content.whatsapp_number}</p><Link to="/admin/content" className="mt-4 inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-yellow-700 hover:text-yellow-600">Manage website content <ExternalLink size={14} /></Link></section><section className="card p-5"><div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-blue-100 text-blue-700"><ShieldCheck size={20} /></span><div><h2 className="font-black">Private dashboard</h2><p className="mt-1 text-xs text-slate-500">Owner administration area</p></div></div><div className="mt-5 grid gap-3 text-sm text-slate-600"><p className="flex items-center gap-2"><KeyRound size={16} className="text-yellow-600" /> Authentication: {isDemo ? "Demo mode" : "Supabase Auth"}</p><p className="flex items-center gap-2"><Globe2 size={16} className="text-yellow-600" /> Admin route: <span className="font-bold text-slate-800">/admin</span></p></div></section></div></>;
+}
