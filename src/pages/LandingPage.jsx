@@ -6,14 +6,15 @@ import { useApp } from "../context/AppContext";
 import { whatsappLink } from "../lib/whatsapp";
 
 export default function LandingPage() {
-  const { content, services, gallery, testimonials } = useApp();
+  const { content, services, dataError } = useApp();
   const visibleServices = content.services || services;
-  const visibleGallery = content.gallery || gallery;
-  const visibleTestimonials = content.testimonials || testimonials;
+  const visibleGallery = content.gallery || [];
+  const visibleTestimonials = content.testimonials || [];
   return <div className="bg-white">
     <PublicHeader />
+    {dataError && <p className="bg-red-50 px-4 py-2 text-center text-xs font-semibold text-red-700">Some live website content is temporarily unavailable. Please contact Chele Towing by phone or WhatsApp.</p>}
     <section className="relative overflow-hidden bg-ink text-white">
-      <div className="absolute inset-0 opacity-30"><img src={content.hero_image} className="h-full w-full object-cover" alt="Vehicle towing service" /></div>
+      {content.hero_image && <div className="absolute inset-0 opacity-30"><img src={content.hero_image} className="h-full w-full object-cover" alt="Vehicle towing service" /></div>}
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/30" />
       <div className="container-page relative grid min-h-[650px] items-center gap-10 py-20 lg:grid-cols-[1fr_390px]">
         <div className="max-w-3xl">
@@ -60,19 +61,19 @@ export default function LandingPage() {
       </div>
     </section>
 
-    <section id="gallery" className="container-page py-20">
+    {visibleGallery.length > 0 && <section id="gallery" className="container-page py-20">
       <SectionTitle eyebrow="Vehicles / Vehículos" title="We evaluate all kinds of vehicles." text="Condition is not a dealbreaker. Send the details and photos for an estimate." />
       <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-3">
         {visibleGallery.map((image, i) => <img key={image} src={image} alt={`Vehicle example ${i + 1}`} className="h-40 w-full rounded-2xl object-cover sm:h-56" />)}
       </div>
-    </section>
+    </section>}
 
-    <section id="reviews" className="bg-slate-50 py-20">
+    {visibleTestimonials.length > 0 && <section id="reviews" className="bg-slate-50 py-20">
       <div className="container-page">
-        <SectionTitle eyebrow="Reviews / Reseñas" title="A simpler way to sell your car." text="Sample testimonial placeholders ready to replace with verified customer feedback." />
+        <SectionTitle eyebrow="Reviews / Reseñas" title="A simpler way to sell your car." text="What vehicle owners say about their Chele Towing experience." />
         <div className="mt-10 grid gap-5 md:grid-cols-3">{visibleTestimonials.map((item) => <article key={item.name} className="card p-6"><div className="flex text-yellow-400">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={17} fill="currentColor" />)}</div><p className="mt-5 text-sm leading-relaxed text-slate-600">“{item.text}”</p><p className="mt-5 text-sm font-black">{item.name}</p></article>)}</div>
       </div>
-    </section>
+    </section>}
 
     <section className="bg-towing py-16">
       <div className="container-page flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">

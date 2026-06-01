@@ -11,7 +11,7 @@ const initialForm = { owner_name: "", phone: "", address: "", city: "", vehicle_
 const options = [["good", "Good / Bueno"], ["fair", "Fair / Regular"], ["damaged", "Damaged / Chocado"], ["not_running", "Not running / No prende"], ["junk", "Junk / Desarme"]];
 
 export default function EstimatePage() {
-  const { content, addLead, isDemo } = useApp();
+  const { content, addLead, dataError } = useApp();
   const [form, setForm] = useState(initialForm);
   const [files, setFiles] = useState([]);
   const [submitted, setSubmitted] = useState(null);
@@ -45,7 +45,7 @@ export default function EstimatePage() {
         <p className="text-xs font-black uppercase tracking-[0.2em] text-yellow-600">Free estimate / Cotización gratis</p>
         <h1 className="mt-2 text-3xl font-black">Tell us about your vehicle.</h1>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">Complete the details below. Completa los datos para recibir un rango aproximado.</p>
-        {isDemo && <p className="mt-4 rounded-xl bg-blue-50 p-3 text-xs font-semibold text-blue-700">Demo mode: submissions are stored in this browser until Supabase is configured.</p>}
+        {dataError && <p className="mt-4 rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-700">Online submissions are temporarily unavailable. Please contact Chele Towing by WhatsApp or phone.</p>}
         <form className="mt-7 grid gap-5" onSubmit={submit}>
           <FormSection title="Owner information / Datos del dueño">
             <Field label="Owner name / Nombre del dueño"><input required className="field" value={form.owner_name} onChange={(e) => update("owner_name", e.target.value)} /></Field>

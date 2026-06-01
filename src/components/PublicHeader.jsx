@@ -8,7 +8,7 @@ import { Brand } from "./Brand";
 export function PublicHeader() {
   const { content } = useApp();
   const [open, setOpen] = useState(false);
-  const links = [["Services", "#services"], ["How It Works", "#process"], ["Vehicles", "#gallery"], ["Reviews", "#reviews"]];
+  const links = [["Services", "#services"], ["How It Works", "#process"], ...(content.gallery?.length ? [["Vehicles", "#gallery"]] : []), ...(content.testimonials?.length ? [["Reviews", "#reviews"]] : [])];
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
       <div className="container-page flex h-18 items-center justify-between py-3">

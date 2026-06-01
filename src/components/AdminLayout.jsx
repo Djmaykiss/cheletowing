@@ -7,7 +7,7 @@ import { Brand } from "./Brand";
 const nav = [["Dashboard", "/admin", BarChart3], ["Leads", "/admin/leads", CarFront], ["Content Manager", "/admin/content", FileText], ["Settings", "/admin/settings", Settings]];
 
 export function AdminLayout() {
-  const { signOut, session, isDemo } = useApp();
+  const { signOut, session, dataError } = useApp();
   const [open, setOpen] = useState(false);
   return <div className="min-h-screen bg-slate-100">
     <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-ink p-4 text-white transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
@@ -19,8 +19,8 @@ export function AdminLayout() {
       </div>
     </aside>
     <div className="lg:pl-64">
-      <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-7"><button className="lg:hidden" onClick={() => setOpen(true)}><Menu /></button><div className="ml-auto flex items-center gap-3"><div className="text-right"><p className="text-xs font-black">{session?.user?.email}</p><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{isDemo ? "Demo mode" : "Administrator"}</p></div><span className="grid h-9 w-9 place-items-center rounded-full bg-yellow-100 text-xs font-black text-yellow-700">CT</span></div></header>
-      <main className="p-4 sm:p-7"><Outlet /></main>
+      <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-7"><button className="lg:hidden" onClick={() => setOpen(true)}><Menu /></button><div className="ml-auto flex items-center gap-3"><div className="text-right"><p className="text-xs font-black">{session?.user?.email}</p><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Administrator</p></div><span className="grid h-9 w-9 place-items-center rounded-full bg-yellow-100 text-xs font-black text-yellow-700">CT</span></div></header>
+      <main className="p-4 sm:p-7">{dataError && <p className="mb-5 rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{dataError}</p>}<Outlet /></main>
     </div>
   </div>;
 }
